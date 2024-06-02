@@ -88,28 +88,19 @@ function FindEmailwithRange(range) {
   }
 }
 
+function FindEmail(firstName,lastName,domain) {
+  var args = Array.prototype.slice.call(arguments); // Convert arguments to an array
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var argStrings = [];
 
+  for (var i = 0; i < args.length; i++) {
+    argStrings[i] = args[i].toString();
+  }
 
-
-
-function FindEmail(firstNameCell, lastNameCell, domainCell) {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  
-  // Convert arguments to strings if not already
-  firstNameCell = String(firstNameCell);
-  lastNameCell = String(lastNameCell);
-  domainCell = String(domainCell);
-  
-  // Parse cell references
-  var firstName = String(sheet.getRange(firstNameCell).getValue());
-  var lastName = String(sheet.getRange(lastNameCell).getValue());
-  var domain = String(sheet.getRange(domainCell).getValue());
-  
-  
-  var firstName = String(sheet.getRange(firstNameCell).getDisplayValue());
-  var lastName = String(sheet.getRange(lastNameCell).getDisplayValue());
-  var domain = String(sheet.getRange(domainCell).getDisplayValue());
-  
+  // Retrieve the values of the specified cells
+  var firstName = sheet.getRange(argStrings[0]).getDisplayValue();
+  var lastName = sheet.getRange(argStrings[1]).getDisplayValue();
+  var domain = sheet.getRange(argStrings[2]).getDisplayValue();
 
   var apiKey = PropertiesService.getUserProperties().getProperty('HUNTER_API_KEY');
   
@@ -118,11 +109,9 @@ function FindEmail(firstNameCell, lastNameCell, domainCell) {
   }
   
   var url = `https://api.hunter.io/v2/email-finder?domain=${domain}&first_name=${firstName}&last_name=${lastName}&api_key=${apiKey}`;
-  
-  
-  
+
   var response = UrlFetchApp.fetch(url);
-  
+
   if (response.getResponseCode() === 200) {
     var data = JSON.parse(response.getContentText());
     
@@ -134,17 +123,4 @@ function FindEmail(firstNameCell, lastNameCell, domainCell) {
   } else {
     return 'Failed to fetch data. Response code: ' + response.getResponseCode();
   }
-}
-
-
-function testFindEmailRange() {
-  
-  var result =findEmail("A2:C2");
-  Logger.log(result);
-}
-
-function testFindEmail() {
-  
-  var result = FindEmail("A2", "B2","C2");
-  Logger.log(result);
 }
