@@ -12,7 +12,7 @@ function showApiKeyPrompt() {
   var html = HtmlService.createHtmlOutputFromFile('dialog')
       .setWidth(300)
       .setHeight(200);
-  SpreadsheetApp.getUi().showModalDialog(html, 'Enter Hunter.io API Key');
+  SpreadsheetApp.getUi().showModalDialog(html, 'API Key Dialog');
 }
 // Function to check and set the API key
 function checkApiKey(apiKey) {
