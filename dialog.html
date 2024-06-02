@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+</head>
+<body>
+  <h2>Enter Hunter.io API Key</h2>
+  <input type="text" id="apiKeyInput" placeholder="Enter API Key">
+  <br><br>
+  <button onclick="checkApiKey()">Set API Key</button>
+  <div id="message"></div> <!-- This div will display the confirmation or error message -->
+  <script>
+    function checkApiKey() {
+      var apiKey = document.getElementById('apiKeyInput').value;
+      google.script.run.withSuccessHandler(showMessage).checkApiKey(apiKey);
+    }
+
+    function showMessage(message) {
+      document.getElementById('message').innerText = message;
+      if (message === "API key saved successfully!") {
+        setTimeout(function() {
+          google.script.host.close();
+        }, 1500); // Close the dialog after 1.5 seconds if the API key is valid
+      }
+    }
+  </script>
+</body>
+</html>
