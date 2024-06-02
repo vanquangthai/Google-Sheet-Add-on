@@ -63,7 +63,7 @@ function getSheetValuesAsString(range) {
 }
 
 
-function findEmailwithRange(range) {
+function FindEmailwithRange(range) {
   
   var { firstName, lastName, domain } = getSheetValuesAsString(range);
   var apiKey = PropertiesService.getUserProperties().getProperty('HUNTER_API_KEY');
